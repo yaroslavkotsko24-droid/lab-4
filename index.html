@@ -1,56 +1,106 @@
 <!DOCTYPE html>
+
 <html lang="uk">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <title>Лабораторна робота №4</title>
+    <title>
+        Лабораторна робота №4
+    </title>
+
 
     <style>
+
         body {
             font-family: Arial, sans-serif;
             margin: 30px;
+            background-color: #f5f5f5;
         }
+
 
         h1 {
             text-align: center;
         }
 
+
         h2 {
             margin-top: 30px;
         }
 
+
+        .buttons {
+            text-align: center;
+            margin: 20px;
+        }
+
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+
         .result {
+            background-color: white;
             border: 1px solid #cccccc;
             padding: 15px;
             margin: 15px 0;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+
+        .array {
+            word-break: break-all;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <h1>Лабораторна робота №4</h1>
 
-    <h2>Розробка бібліотек у JavaScript</h2>
+    <h1>
+        Лабораторна робота №4
+    </h1>
+
+
+    <h2>
+        Розробка бібліотеки сортування мовою JavaScript
+    </h2>
+
 
     <p>
-        Демонстрація роботи бібліотеки сортування числових масивів.
+        У роботі реалізовано п'ять алгоритмів сортування
+        числових масивів.
     </p>
 
-    <button onclick="runProgram()">
-        Виконати сортування
-    </button>
+
+    <div class="buttons">
+
+        <button onclick="runAscending()">
+            Сортувати за зростанням
+        </button>
+
+
+        <button onclick="runDescending()">
+            Сортувати за спаданням
+        </button>
+
+    </div>
+
 
     <div id="output"></div>
 
+
     <script src="sortingLibrary.js"></script>
+
     <script src="script.js"></script>
+
 
 </body>
 
