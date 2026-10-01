@@ -270,11 +270,11 @@ var SortingLibrary = {
 
             while (i <= j) {
 
-                while (compareValues(arr[i], pivot)) {
+                while (i <= right && compareValues(arr[i], pivot)) {
                     i++;
                 }
 
-                while (compareValues(arr[j], pivot)) {
+                while (j >= left && compareValues(arr[j], pivot)) {
                     j--;
                 }
 
