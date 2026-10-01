@@ -1,4 +1,4 @@
-let array = [
+var normalArray = [
     73, 12, 45, 9, 88, 34, 67, 21, 56, 3,
     91, 17, 42, 64, 28, 75, 6, 39, 83, 14,
     52, 31, 97, 25, 61, 8, 44, 70, 19, 86,
@@ -11,109 +11,341 @@ let array = [
     65, 90, 46, 100, 51, 72, 82, 98, 96, 77
 ];
 
-let sparseArray = new Array(100);
 
-for (let i = 0; i < sparseArray.length; i++) {
+var sparseArray = new Array(100);
+
+
+for (var i = 0; i < sparseArray.length; i++) {
 
     if (i % 7 !== 0 && i % 11 !== 0) {
-        sparseArray[i] = array[i];
+        sparseArray[i] = normalArray[i];
     }
 }
 
-function showResult(name, result) {
 
-    let output = document.getElementById("output");
+function arrayToString(array) {
 
-    output.innerHTML += `
-        <div class="result">
-            <h3>${name}</h3>
+    var text = "";
 
-            <p>
-                <b>Порівнянь:</b>
-                ${result.comparisons}
-            </p>
+    for (var i = 0; i < array.length; i++) {
 
-            <p>
-                <b>Обмінів/переміщень:</b>
-                ${result.movements}
-            </p>
+        if (array[i] === undefined) {
+            text = text + "undefined";
+        } else {
+            text = text + array[i];
+        }
 
-            <p>
-                <b>Undefined:</b>
-                ${result.undefinedCount}
-            </p>
+        if (i < array.length - 1) {
+            text = text + ", ";
+        }
+    }
 
-            <p>
-                <b>Результат:</b><br>
-                ${result.array.join(", ")}
-            </p>
-        </div>
-    `;
+    return text;
 }
 
-function runProgram() {
 
-    let output = document.getElementById("output");
+function showResult(name, result) {
+
+    var output = document.getElementById("output");
+
+    var block = document.createElement("div");
+
+    block.className = "result";
+
+
+    var title = document.createElement("h3");
+
+    title.innerHTML = name;
+
+    block.appendChild(title);
+
+
+    var information = document.createElement("p");
+
+    information.innerHTML =
+        "Кількість порівнянь: " +
+        result.comparisons +
+        "<br>" +
+
+        "Кількість обмінів/переміщень: " +
+        result.movements +
+        "<br>" +
+
+        "Кількість undefined: " +
+        result.undefinedCount;
+
+    block.appendChild(information);
+
+
+    var resultTitle = document.createElement("p");
+
+    resultTitle.innerHTML =
+        "<b>Результат сортування:</b>";
+
+    block.appendChild(resultTitle);
+
+
+    var resultText = document.createElement("p");
+
+    resultText.innerHTML =
+        arrayToString(result.array);
+
+    block.appendChild(resultText);
+
+
+    output.appendChild(block);
+}
+
+
+function showArrayInfo(name, array) {
+
+    var output = document.getElementById("output");
+
+    var title = document.createElement("h2");
+
+    title.innerHTML = name;
+
+    output.appendChild(title);
+
+
+    var information = document.createElement("p");
+
+    var undefinedCount = 0;
+
+    for (var i = 0; i < array.length; i++) {
+
+        if (array[i] === undefined) {
+            undefinedCount++;
+        }
+    }
+
+    information.innerHTML =
+        "Довжина масиву: " +
+        array.length +
+        "<br>" +
+
+        "Кількість undefined: " +
+        undefinedCount;
+
+    output.appendChild(information);
+}
+
+
+function runAscending() {
+
+    var output = document.getElementById("output");
 
     output.innerHTML = "";
 
-    output.innerHTML += `
-        <h2>Нерозріджений масив</h2>
-    `;
+
+    showArrayInfo(
+        "Нерозріджений масив",
+        normalArray
+    );
+
 
     showResult(
         "Сортування обміном",
-        SortingLibrary.bubbleSort(array, true)
+        SortingLibrary.bubbleSort(
+            normalArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(array, true)
+        SortingLibrary.selectionSort(
+            normalArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування вставками",
-        SortingLibrary.insertionSort(array, true)
+        SortingLibrary.insertionSort(
+            normalArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування Шелла",
-        SortingLibrary.shellSort(array, true)
+        SortingLibrary.shellSort(
+            normalArray,
+            true
+        )
     );
+
 
     showResult(
         "Швидке сортування Хоара",
-        SortingLibrary.quickSort(array, true)
+        SortingLibrary.quickSort(
+            normalArray,
+            true
+        )
     );
 
-    output.innerHTML += `
-        <h2>Розріджений масив</h2>
-    `;
+
+    showArrayInfo(
+        "Розріджений масив",
+        sparseArray
+    );
+
 
     showResult(
         "Сортування обміном",
-        SortingLibrary.bubbleSort(sparseArray, true)
+        SortingLibrary.bubbleSort(
+            sparseArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(sparseArray, true)
+        SortingLibrary.selectionSort(
+            sparseArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування вставками",
-        SortingLibrary.insertionSort(sparseArray, true)
+        SortingLibrary.insertionSort(
+            sparseArray,
+            true
+        )
     );
+
 
     showResult(
         "Сортування Шелла",
-        SortingLibrary.shellSort(sparseArray, true)
+        SortingLibrary.shellSort(
+            sparseArray,
+            true
+        )
     );
+
 
     showResult(
         "Швидке сортування Хоара",
-        SortingLibrary.quickSort(sparseArray, true)
+        SortingLibrary.quickSort(
+            sparseArray,
+            true
+        )
     );
 }
 
-runProgram();
+
+function runDescending() {
+
+    var output = document.getElementById("output");
+
+    output.innerHTML = "";
+
+
+    showArrayInfo(
+        "Нерозріджений масив",
+        normalArray
+    );
+
+
+    showResult(
+        "Сортування обміном",
+        SortingLibrary.bubbleSort(
+            normalArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування мінімальних елементів",
+        SortingLibrary.selectionSort(
+            normalArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування вставками",
+        SortingLibrary.insertionSort(
+            normalArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування Шелла",
+        SortingLibrary.shellSort(
+            normalArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Швидке сортування Хоара",
+        SortingLibrary.quickSort(
+            normalArray,
+            false
+        )
+    );
+
+
+    showArrayInfo(
+        "Розріджений масив",
+        sparseArray
+    );
+
+
+    showResult(
+        "Сортування обміном",
+        SortingLibrary.bubbleSort(
+            sparseArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування мінімальних елементів",
+        SortingLibrary.selectionSort(
+            sparseArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування вставками",
+        SortingLibrary.insertionSort(
+            sparseArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Сортування Шелла",
+        SortingLibrary.shellSort(
+            sparseArray,
+            false
+        )
+    );
+
+
+    showResult(
+        "Швидке сортування Хоара",
+        SortingLibrary.quickSort(
+            sparseArray,
+            false
+        )
+    );
+}
