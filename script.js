@@ -23,20 +23,20 @@ for (var i = 0; i < sparseArray.length; i++) {
 }
 
 
+/*
+    Перетворення масиву у текст
+*/
 function arrayToString(array) {
 
     var text = "";
 
     for (var i = 0; i < array.length; i++) {
 
-        if (array[i] === undefined) {
-            text = text + "undefined";
-        } else {
-            text = text + array[i];
+        if (array[i] === undefined) {text = text + "undefined";
+        } else {text = text + array[i];
         }
 
-        if (i < array.length - 1) {
-            text = text + ", ";
+        if (i < array.length - 1) {text = text + ", ";
         }
     }
 
@@ -44,7 +44,22 @@ function arrayToString(array) {
 }
 
 
-function showResult(name, result) {
+/*
+    Виведення результату
+    на HTML-сторінку та у консоль
+*/
+function showResult(name, result, arrayType, direction) {
+
+    console.log("========================================");
+    console.log("Тип масиву:", arrayType);
+    console.log("Напрямок:", direction);
+    console.log("Алгоритм:", name);
+    console.log("Порівнянь:", result.comparisons);
+    console.log("Обмінів/переміщень:", result.movements);
+    console.log("Undefined:", result.undefinedCount);
+    console.log("Результат:", result.array);
+    console.log("========================================");
+
 
     var output = document.getElementById("output");
 
@@ -52,30 +67,39 @@ function showResult(name, result) {
 
     block.className = "result";
 
-
     var title = document.createElement("h3");
 
     title.innerHTML = name;
 
     block.appendChild(title);
 
+    var typeText = document.createElement("p");
+
+    typeText.innerHTML =
+        "<b>Тип масиву:</b> " +
+        arrayType +
+        "<br>" +
+
+        "<b>Напрямок:</b> " +
+        direction;
+
+    block.appendChild(typeText);
 
     var information = document.createElement("p");
 
     information.innerHTML =
-        "Кількість порівнянь: " +
+        "<b>Кількість порівнянь:</b> " +
         result.comparisons +
         "<br>" +
 
-        "Кількість обмінів/переміщень: " +
+        "<b>Кількість обмінів/переміщень:</b> " +
         result.movements +
         "<br>" +
 
-        "Кількість undefined: " +
+        "<b>Кількість undefined:</b> " +
         result.undefinedCount;
 
     block.appendChild(information);
-
 
     var resultTitle = document.createElement("p");
 
@@ -84,19 +108,20 @@ function showResult(name, result) {
 
     block.appendChild(resultTitle);
 
-
     var resultText = document.createElement("p");
 
-    resultText.innerHTML =
-        arrayToString(result.array);
+    resultText.className = "array";
+
+    resultText.innerHTML =arrayToString(result.array);
 
     block.appendChild(resultText);
-
 
     output.appendChild(block);
 }
 
-
+/*
+    Інформація про масив
+*/
 function showArrayInfo(name, array) {
 
     var output = document.getElementById("output");
@@ -108,244 +133,185 @@ function showArrayInfo(name, array) {
     output.appendChild(title);
 
 
-    var information = document.createElement("p");
-
     var undefinedCount = 0;
 
     for (var i = 0; i < array.length; i++) {
 
-        if (array[i] === undefined) {
-            undefinedCount++;
+        if (array[i] === undefined) {undefinedCount++;
         }
     }
 
+
+    var information = document.createElement("p");
+
     information.innerHTML =
-        "Довжина масиву: " +
+        "<b>Довжина масиву:</b> " +
         array.length +
         "<br>" +
 
-        "Кількість undefined: " +
-        undefinedCount;
+        "<b>Кількість undefined:</b> " + undefinedCount;
 
     output.appendChild(information);
 }
 
-
+/*
+    Тестування всіх алгоритмів за зростанням
+*/
 function runAscending() {
 
     var output = document.getElementById("output");
 
     output.innerHTML = "";
 
+    console.clear();
 
-    showArrayInfo(
-        "Нерозріджений масив",
-        normalArray
+    console.log("========================================");
+    console.log("ТЕСТОВИЙ ЗАПУСК");
+    console.log("Сортування за зростанням");
+    console.log("========================================");
+
+    /*
+        Нерозріджений масив
+    */
+
+    showArrayInfo("Нерозріджений масив",normalArray);
+
+    showResult("Сортування обміном",SortingLibrary.bubbleSort(normalArray,true),
+        "Нерозріджений",
+        "За зростанням"
     );
 
 
-    showResult(
-        "Сортування обміном",
-        SortingLibrary.bubbleSort(
-            normalArray,
-            true
-        )
+    showResult("Сортування мінімальних елементів",SortingLibrary.selectionSort(normalArray,true),
+        "Нерозріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(
-            normalArray,
-            true
-        )
+    showResult("Сортування вставками",SortingLibrary.insertionSort(normalArray,true),
+        "Нерозріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування вставками",
-        SortingLibrary.insertionSort(
-            normalArray,
-            true
-        )
+    showResult("Сортування Шелла",SortingLibrary.shellSort(normalArray,true),
+        "Нерозріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування Шелла",
-        SortingLibrary.shellSort(
-            normalArray,
-            true
-        )
+    showResult("Швидке сортування Хоара",SortingLibrary.quickSort(normalArray,true),
+        "Нерозріджений",
+        "За зростанням"
     );
 
+    /*
+        Розріджений масив
+    */
 
-    showResult(
-        "Швидке сортування Хоара",
-        SortingLibrary.quickSort(
-            normalArray,
-            true
-        )
+    showArrayInfo("Розріджений масив",sparseArray);
+
+    showResult("Сортування обміном",SortingLibrary.bubbleSort(sparseArray,true),
+        "Розріджений",
+        "За зростанням"
     );
 
-
-    showArrayInfo(
-        "Розріджений масив",
-        sparseArray
+    showResult("Сортування мінімальних елементів",SortingLibrary.selectionSort(sparseArray,true),
+        "Розріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування обміном",
-        SortingLibrary.bubbleSort(
-            sparseArray,
-            true
-        )
+    showResult("Сортування вставками",SortingLibrary.insertionSort(sparseArray,true),
+        "Розріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(
-            sparseArray,
-            true
-        )
+    showResult("Сортування Шелла",SortingLibrary.shellSort(sparseArray,true),
+        "Розріджений",
+        "За зростанням"
     );
 
-
-    showResult(
-        "Сортування вставками",
-        SortingLibrary.insertionSort(
-            sparseArray,
-            true
-        )
-    );
-
-
-    showResult(
-        "Сортування Шелла",
-        SortingLibrary.shellSort(
-            sparseArray,
-            true
-        )
-    );
-
-
-    showResult(
-        "Швидке сортування Хоара",
-        SortingLibrary.quickSort(
-            sparseArray,
-            true
-        )
+    showResult("Швидке сортування Хоара",SortingLibrary.quickSort(sparseArray,true),
+        "Розріджений",
+        "За зростанням"
     );
 }
 
-
+/*
+    Тестування всіх алгоритмів
+    за спаданням
+*/
 function runDescending() {
 
     var output = document.getElementById("output");
 
     output.innerHTML = "";
 
+    console.clear();
+
+    console.log("========================================");
+    console.log("ТЕСТОВИЙ ЗАПУСК");
+    console.log("Сортування за спаданням");
+    console.log("========================================");
+
+    /*
+        Нерозріджений масив
+    */
 
     showArrayInfo(
-        "Нерозріджений масив",
-        normalArray
+        "Нерозріджений масив",normalArray);
+
+    showResult("Сортування обміном",SortingLibrary.bubbleSort(normalArray,false),
+        "Нерозріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування обміном",
-        SortingLibrary.bubbleSort(
-            normalArray,
-            false
-        )
+    showResult("Сортування мінімальних елементів",SortingLibrary.selectionSort(normalArray,false),
+        "Нерозріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(
-            normalArray,
-            false
-        )
+    showResult("Сортування вставками",SortingLibrary.insertionSort(normalArray,false),
+        "Нерозріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування вставками",
-        SortingLibrary.insertionSort(
-            normalArray,
-            false
-        )
+    showResult("Сортування Шелла",SortingLibrary.shellSort(normalArray,false),
+        "Нерозріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування Шелла",
-        SortingLibrary.shellSort(
-            normalArray,
-            false
-        )
+    showResult("Швидке сортування Хоара",SortingLibrary.quickSort(normalArray,false),
+        "Нерозріджений",
+        "За спаданням"
     );
 
+    /*
+        Розріджений масив
+    */
 
-    showResult(
-        "Швидке сортування Хоара",
-        SortingLibrary.quickSort(
-            normalArray,
-            false
-        )
+    showArrayInfo("Розріджений масив",sparseArray);
+
+
+    showResult("Сортування обміном",SortingLibrary.bubbleSort(sparseArray,false),
+        "Розріджений",
+        "За спаданням"
     );
 
-
-    showArrayInfo(
-        "Розріджений масив",
-        sparseArray
+    showResult("Сортування мінімальних елементів",SortingLibrary.selectionSort(sparseArray,false),
+        "Розріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування обміном",
-        SortingLibrary.bubbleSort(
-            sparseArray,
-            false
-        )
+    showResult("Сортування вставками",SortingLibrary.insertionSort(sparseArray,false),
+        "Розріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування мінімальних елементів",
-        SortingLibrary.selectionSort(
-            sparseArray,
-            false
-        )
+    showResult("Сортування Шелла",SortingLibrary.shellSort(sparseArray,false),
+        "Розріджений",
+        "За спаданням"
     );
 
-
-    showResult(
-        "Сортування вставками",
-        SortingLibrary.insertionSort(
-            sparseArray,
-            false
-        )
-    );
-
-
-    showResult(
-        "Сортування Шелла",
-        SortingLibrary.shellSort(
-            sparseArray,
-            false
-        )
-    );
-
-
-    showResult(
-        "Швидке сортування Хоара",
-        SortingLibrary.quickSort(
-            sparseArray,
-            false
-        )
+    showResult("Швидке сортування Хоара",SortingLibrary.quickSort(sparseArray,false),
+        "Розріджений",
+        "За спаданням"
     );
 }
