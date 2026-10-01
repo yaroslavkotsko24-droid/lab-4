@@ -50,7 +50,7 @@ function arrayToString(array) {
 */
 function showResult(name, result, arrayType, direction) {
 
-    console.log("========================================");
+    console.log(" ");
     console.log("Тип масиву:", arrayType);
     console.log("Напрямок:", direction);
     console.log("Алгоритм:", name);
@@ -58,7 +58,7 @@ function showResult(name, result, arrayType, direction) {
     console.log("Обмінів/переміщень:", result.movements);
     console.log("Undefined:", result.undefinedCount);
     console.log("Результат:", result.array);
-    console.log("========================================");
+    console.log(" ");
 
 
     var output = document.getElementById("output");
@@ -165,10 +165,10 @@ function runAscending() {
 
     console.clear();
 
-    console.log("========================================");
+    console.log(" ");
     console.log("ТЕСТОВИЙ ЗАПУСК");
     console.log("Сортування за зростанням");
-    console.log("========================================");
+    console.log(" ");
 
     /*
         Нерозріджений масив
@@ -246,10 +246,10 @@ function runDescending() {
 
     console.clear();
 
-    console.log("========================================");
+    console.log(" ");
     console.log("ТЕСТОВИЙ ЗАПУСК");
     console.log("Сортування за спаданням");
-    console.log("========================================");
+    console.log(" ");
 
     /*
         Нерозріджений масив
